@@ -17,7 +17,7 @@ jobs:
       - restore_cache:
           name: "Restore yarn cache if exists"
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+            - yarn-packages-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
       - run:
           name: "install"
           command: yarn install
@@ -25,7 +25,7 @@ jobs:
           name: "Save yarn cache"
           paths:
             - node_modules
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          key: yarn-packages-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
       - run:
           name: "debug"
           command: ls
