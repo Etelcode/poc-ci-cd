@@ -24,9 +24,11 @@ jobs:
       - save_cache:
           name: "Save yarn cache"
           paths:
-            - .yarn/cache
-            - .yarn/unplugged
+            - node_modules
           key: yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: "debug"
+          command: ls
       - run:
           name: "linting"
           command: yarn run lint
