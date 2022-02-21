@@ -11,9 +11,9 @@ jobs:
       - image: 'cimg/base:stable'
     steps:
       - checkout
-      - run:
-          name: "install"
-          command: yarn install
+      - node/install:
+          install-yarn: true
+          node-version: "16.13"
       - run:
           name: "linting"
           command: yarn run lint
