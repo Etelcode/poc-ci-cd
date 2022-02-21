@@ -14,9 +14,19 @@ jobs:
       - node/install:
           install-yarn: true
           node-version: "16.13"
+      - restore_cache:
+          name: "Restore yarn cache if exists"
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: "install"
           command: yarn install
+      - save_cache:
+          name: "Save yarn cache"
+          paths:
+            - .yarn/cache
+            - .yarn/unplugged
+          key: yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: "linting"
           command: yarn run lint
