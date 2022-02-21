@@ -19,3 +19,13 @@ workflows:
           version: '16.10'
           # If you are using yarn, change the line below from "npm" to "yarn"
           pkg-manager: yarn
+      - lint:
+          requires:
+            - node/test
+          executor:
+            name: node/default
+            tag: '16'
+          steps:
+            - run:
+              command: yarn run lint
+              name: Run eslint
