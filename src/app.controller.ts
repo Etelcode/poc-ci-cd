@@ -12,7 +12,7 @@ export class AppController {
     @Get('/:name')
     async hello(@Param('name') name: string): Promise<string> {
         // VX used to trigger a commit to test versions
-        return (await this.appService.hello(name) + ": v1");
+        return (await this.appService.hello(name) + ": v8");
     }
 
     @Post('/sum')

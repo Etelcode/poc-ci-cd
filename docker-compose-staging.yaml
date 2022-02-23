@@ -1,8 +1,13 @@
 version: '3'
 
+volumes:
+  node_modules:
+
 services:
   appStaging:
     image: etelcode/poc-ci-cd:staging
     ports:
       - "3001:3000"
     restart: always
+    volumes:
+      - node_modules:/app/node_modules

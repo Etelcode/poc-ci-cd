@@ -27,7 +27,6 @@ killBuilder		:
 # THE BUILDER WILL CREATE THE DIST COMPILED PROJECT IN HOST FILESYSTEM
 # USED TO NOT PUBLISH THE PRETTY SOURCE CODE
 builder			: killBuilder
-				sudo rm -rf dist node_modules
 				docker build -f dockerfiles/build.dockerfile -t builder-$(name) .
 				docker run											\
 				--name builder-$(name) 										\
@@ -71,12 +70,16 @@ pushRelease		: build
 startStaging :
                 # PULL DOCKER HUB LATEST STAGING IMAGE
 				docker-compose -f ./docker-compose-staging.yaml pull
+                # BUILD CONTAINERS
+				docker-compose -f ./docker-compose-staging.yaml build
                 # STARTING THE IMAGE
 				docker-compose -f ./docker-compose-staging.yaml up -d
 
 startProd :
                 # PULL DOCKER HUB LATEST PRODUCTION IMAGE
 				docker-compose -f ./docker-compose-prod.yaml pull
+                # BUILD CONTAINERS
+				docker-compose -f ./docker-compose-prod.yaml build
                 # STARTING THE IMAGE
 				docker-compose -f ./docker-compose-prod.yaml up -d
 

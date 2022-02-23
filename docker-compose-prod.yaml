@@ -1,8 +1,13 @@
 version: '3'
 
+volumes:
+  node_modules:
+
 services:
   app:
     image: etelcode/poc-ci-cd:latest
     ports:
       - "3000:3000"
     restart: always
+    volumes:
+      - node_modules:/app/node_modules
