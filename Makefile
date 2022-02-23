@@ -30,7 +30,7 @@ builder			: killBuilder
 				sudo rm -rf dist node_modules
 				docker build -f dockerfiles/build.dockerfile -t builder-$(name) .
 				docker run											\
-				--name dev-$(name) 										\
+				--name builder-$(name) 										\
 				--mount type=bind,source='$(shell pwd)',target=/app	\
 				builder-$(name)
 
@@ -57,11 +57,11 @@ kill			:
 				@docker rm dev-$(name) prod-$(name) build-$(name) \
 					2> /dev/null || true
 
-# PUSH TO DOCKER HUB WITH THE STAGGING TAG
-pushStagging	: build
+# PUSH TO DOCKER HUB WITH THE STAGING TAG
+pushStaging	: build
 				docker login
-				docker tag etelcode/$(name)-ci-cd:latest etelcode/$(name)-ci-cd:stagging
-				docker push etelcode/$(name)-ci-cd:stagging
+				docker tag etelcode/$(name)-ci-cd:latest etelcode/$(name)-ci-cd:staging
+				docker push etelcode/$(name)-ci-cd:staging
 
 # PUSH TO DOCKER HUB WITH THE LATEST TAG
 pushRelease		: build
