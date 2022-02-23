@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  app:
+  appStaging:
     image: etelcode/poc-ci-cd:staging
     ports:
       - "3001:3001"

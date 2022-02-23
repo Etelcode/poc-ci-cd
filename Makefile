@@ -68,6 +68,18 @@ pushRelease		: build
 				docker login
 				docker push etelcode/$(name)-ci-cd:latest
 
+startStaging :
+                # PULL DOCKER HUB LATEST STAGING IMAGE
+				docker-compose -f ./docker-compose-staging.yaml pull
+                # STARTING THE IMAGE
+				docker-compose -f ./docker-compose-staging.yaml up -d
+
+startProd :
+                # PULL DOCKER HUB LATEST PRODUCTION IMAGE
+				docker-compose -f ./docker-compose-prod.yaml pull
+                # STARTING THE IMAGE
+				docker-compose -f ./docker-compose-prod.yaml up -d
+
 %:
 	@:
 
