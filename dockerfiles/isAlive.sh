@@ -5,7 +5,7 @@
 
 echo hello
 
-while ! curl localhost:3000/api
+while ! curl -s localhost:3000/api
 do
     sleep 1;
 done

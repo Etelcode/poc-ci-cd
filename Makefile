@@ -74,8 +74,11 @@ startStaging :
 				docker-compose -f ./docker-compose-staging.yaml build
                 # STARTING THE IMAGE
 				docker-compose -f ./docker-compose-staging.yaml up -d
+                # INTERACTIVE !
+				@echo "Waiting until the service is up !"
                 # WAIT UNTIL THE SERVICE IS UP
-				docker exec poc_ci_cd_appStaging_1 bash /app/isAlive.sh
+				@echo "Down time estimation :"
+				@time docker exec poc_ci_cd_appStaging_1 bash /app/isAlive.sh > /dev/null
 
 startProd :
                 # PULL DOCKER HUB LATEST PRODUCTION IMAGE
