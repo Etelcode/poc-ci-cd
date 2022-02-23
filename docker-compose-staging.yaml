@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  app:
+    image: etelcode/poc-ci-cd:staging
+    ports:
+      - "3001:3001"
+    restart: always
