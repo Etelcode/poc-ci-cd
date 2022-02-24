@@ -30,7 +30,7 @@ jobs:
       - run:
           name: "test"
           command: yarn run test
-  staging:
+  deployment:
     machine:
       image: ubuntu-2004:current
     resource_class: large
@@ -57,6 +57,12 @@ jobs:
       - run:
           name: Test staging with newman
           command: docker run -t postman/newman run "https://www.getpostman.com/collections/42326d59eec020c80c77"
+      - run:
+          name: Push release image
+          command: make pushRelease
+      - run:
+          name: Send start production
+          command: ssh -o StrictHostKeyChecking=accept-new ubuntu@staging.cicd.etelcode.fr "cd code/poc_ci_cd ; make startProd"
 
 
 # Invoke jobs via workflows
@@ -65,5 +71,5 @@ workflows:
   push: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
     jobs:
-      # - main
-      - staging
+      # - integration
+      - deployment
