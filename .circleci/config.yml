@@ -58,6 +58,9 @@ jobs:
           name: Push staging image
           command: make pushStaging
       - run:
+          name: Send start staging
+          command: ssh -o StrictHostKeyChecking=accept-new ubuntu@staging.cicd.etelcode.fr "cd code/poc_ci_cd ; make startStaging"
+      - run:
           name: Save Docker image layer cache
           command: |
             mkdir -p /tmp/caches
@@ -71,9 +74,6 @@ jobs:
           paths:
             - node_modules
           key: yarn-packages-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-      - run:
-          name: Test ssh
-          command: ssh -o StrictHostKeyChecking=accept-new ubuntu@staging.cicd.etelcode.fr "cd code/poc_ci_cd ; make startStaging"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
