@@ -42,11 +42,18 @@ jobs:
       - restore_cache:
           keys:
             - v1-{{ .Branch }}
+      - restore_cache:
+          name: "Restore yarn cache if exists"
+          keys:
+            - yarn-packages-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
       - run:
           name: Load Docker image layer cache
           command: |
             set +o pipefail
             docker load -i /caches/app.tar | true
+      - run:
+          name: Login to docker hub
+          command: docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASS
       - run:
           name: Push staging image
           command: make pushStaging
@@ -59,6 +66,11 @@ jobs:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/app.tar
+      - save_cache:
+          name: "Save yarn cache"
+          paths:
+            - node_modules
+          key: yarn-packages-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
       - run:
           name: Test ssh
           command: ssh -o StrictHostKeyChecking=accept-new ubuntu@staging.cicd.etelcode.fr "cd code/poc_ci_cd ; make startStaging"
