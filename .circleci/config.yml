@@ -38,7 +38,7 @@ jobs:
       - checkout
       - run:
           name: Install make
-          command: apt install make
+          command: sudo apt install make
       - restore_cache:
           keys:
             - v1-{{ .Branch }}
