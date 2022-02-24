@@ -31,17 +31,34 @@ jobs:
           name: "test"
           command: yarn run test
   staging:
-    docker:
-      - image: docker:20.10.12-git
+    machine:
+      image: ubuntu-2004:current
+    resource_class: large
     steps:
       - checkout
-      - setup_remote_docker
       - run:
           name: Install make
-          command: apk add make
+          command: apt install make
+      - restore_cache:
+          keys:
+            - v1-{{ .Branch }}
+      - run:
+          name: Load Docker image layer cache
+          command: |
+            set +o pipefail
+            docker load -i /caches/app.tar | true
       - run:
           name: Push staging image
           command: make pushStaging
+      - run:
+          name: Save Docker image layer cache
+          command: |
+            mkdir -p /caches
+            docker save -o /caches/app.tar app
+      - save_cache:
+          key: v1-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /caches/app.tar
       - run:
           name: Test ssh
           command: ssh -o StrictHostKeyChecking=accept-new ubuntu@staging.cicd.etelcode.fr "cd code/poc_ci_cd ; make startStaging"
