@@ -36,12 +36,6 @@ jobs:
     resource_class: large
     steps:
       - checkout
-      - run:
-          name: Install make
-          command: sudo apt install make
-      - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
       - restore_cache:
           name: "Restore yarn cache if exists"
           keys:
