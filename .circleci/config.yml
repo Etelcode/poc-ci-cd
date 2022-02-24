@@ -40,9 +40,6 @@ jobs:
           name: Install make
           command: sudo apt install make
       - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
-      - restore_cache:
           name: "Restore yarn cache if exists"
           keys:
             - yarn-packages-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
