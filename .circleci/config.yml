@@ -32,7 +32,7 @@ jobs:
           command: yarn run test
   staging:
     docker:
-      - image: docker:20.10.12-ce-git
+      - image: docker:20.10.12-git
     steps:
       - checkout
       - run:
