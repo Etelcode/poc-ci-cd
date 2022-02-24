@@ -52,6 +52,10 @@ jobs:
             set +o pipefail
             docker load -i /caches/app.tar | true
       - run:
+          name: test env var
+          command:
+            echo $DOCKER_HUB_LOGIN $DOCKER_HUB_PASS
+      - run:
           name: Login to docker hub
           command: docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASS
       - run:
