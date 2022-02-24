@@ -58,7 +58,6 @@ kill			:
 
 # PUSH TO DOCKER HUB WITH THE STAGING TAG
 pushStaging	: build
-				docker login
 				docker tag etelcode/$(name)-ci-cd:latest etelcode/$(name)-ci-cd:staging
 				docker push etelcode/$(name)-ci-cd:staging
 
