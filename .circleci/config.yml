@@ -35,6 +35,7 @@ jobs:
       - image: docker:20.10.12-git
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Install make
           command: apk add make
