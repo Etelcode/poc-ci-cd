@@ -65,7 +65,7 @@ jobs:
       - save_cache:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
-            - /caches/app.tar
+            - /tmp/caches/node.tar
       - save_cache:
           name: "Save yarn cache"
           paths:
