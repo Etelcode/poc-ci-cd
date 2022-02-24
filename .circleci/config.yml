@@ -54,6 +54,10 @@ jobs:
           paths:
             - node_modules
           key: yarn-packages-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: Test staging with newman
+          command: docker run -t postman/newman run "https://www.getpostman.com/collections/42326d59eec020c80c77"
+
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
