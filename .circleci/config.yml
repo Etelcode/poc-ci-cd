@@ -47,11 +47,6 @@ jobs:
           keys:
             - yarn-packages-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
       - run:
-          name: Load Docker image layer cache
-          command: |
-            set +o pipefail
-            docker load -i /tmp/caches/node.tar | true
-      - run:
           name: Login to docker hub
           command: docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASS
       - run:
@@ -60,15 +55,6 @@ jobs:
       - run:
           name: Send start staging
           command: ssh -o StrictHostKeyChecking=accept-new ubuntu@staging.cicd.etelcode.fr "cd code/poc_ci_cd ; make startStaging"
-      - run:
-          name: Save Docker image layer cache
-          command: |
-            mkdir -p /tmp/caches
-            docker save -o /tmp/caches/node.tar node
-      - save_cache:
-          key: v1-{{ .Branch }}-{{ epoch }}
-          paths:
-            - /tmp/caches/node.tar
       - save_cache:
           name: "Save yarn cache"
           paths:
