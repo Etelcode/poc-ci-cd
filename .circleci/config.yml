@@ -35,12 +35,15 @@ jobs:
       - image: docker:20.10.12-git
     steps:
       - checkout
+      # - run:
+      #     name: Install make
+      #     command: apk add make
+      # - run:
+      #     name: Push staging image
+      #     command: make pushStaging
       - run:
-          name: install make
-          command: apk add make
-      - run:
-          name: Makefile test
-          command: make -v
+          name: Test ssh
+          command: ssh -v
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
