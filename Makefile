@@ -88,8 +88,8 @@ startProd		:
 				docker-compose -f ./docker-compose-prod.yaml up -d
 
 newmanTests		:
-				bash ./dockerfiles/getNewmanTests.sh
-				bash ./dockerfiles/startNewmanTests.sh
+				bash ./scripts/getNewmanTests.sh
+				bash ./scripts/startNewmanTests.sh
 
 %:
 	@:

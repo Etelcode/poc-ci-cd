@@ -6,7 +6,7 @@ COPY ["./dist",                             \
       "./yarn.lock",                        \
       "./package.json",                     \
       "./dockerfiles/prod.entrypoint.sh",   \
-      "./dockerfiles/isAlive.sh",   \
+      "./scripts/isAlive.sh",   \
       "./"]
 
 ENTRYPOINT ["bash", "./prod.entrypoint.sh"]
