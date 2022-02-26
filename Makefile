@@ -79,13 +79,17 @@ startStaging :
 				@echo "Down time estimation :"
 				@time docker exec poc_ci_cd_appStaging_1 bash /app/isAlive.sh > /dev/null
 
-startProd :
+startProd		:
                 # PULL DOCKER HUB LATEST PRODUCTION IMAGE
 				docker-compose -f ./docker-compose-prod.yaml pull
                 # BUILD CONTAINERS
 				docker-compose -f ./docker-compose-prod.yaml build
                 # STARTING THE IMAGE
 				docker-compose -f ./docker-compose-prod.yaml up -d
+
+newmanTests		:
+				bash ./dockerfiles/getNewmanTests.sh
+				bash ./dockerfiles/startNewmanTests.sh
 
 %:
 	@:

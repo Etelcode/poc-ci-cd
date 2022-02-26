@@ -49,6 +49,9 @@ jobs:
       - run:
           name: Send start staging
           command: ssh -o StrictHostKeyChecking=accept-new ubuntu@staging.cicd.etelcode.fr "cd code/poc_ci_cd ; make startStaging"
+      - run:
+          name: Download & Run newman tests
+          command: make getTests
       - save_cache:
           name: "Save yarn cache"
           paths:
