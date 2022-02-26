@@ -1,9 +1,6 @@
 # This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
 version: 2.1
 
-orbs: 
-  telegram: uniqueck/telegram-orb@0.0.1
-
 # Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
 # See: https://circleci.com/docs/2.0/orb-intro/
 jobs:
@@ -11,7 +8,9 @@ jobs:
     docker:
       - image: node:16
     steps:
-      - telegram/status
+      - run:
+          name: "debug"
+          command: export
       - checkout
       - restore_cache:
           name: "Restore yarn cache i exists"
@@ -34,7 +33,6 @@ jobs:
       - run:
           name: "test"
           command: yarn run test
-      - telegram/status
   deployment:
     machine:
       image: ubuntu-2004:current
@@ -71,7 +69,6 @@ jobs:
       - run:
           name: Send start production
           command: ssh -o StrictHostKeyChecking=accept-new ubuntu@staging.cicd.etelcode.fr "cd code/poc_ci_cd ; make startProd"
-      - telegram/status
 
 
 # Invoke jobs via workflows
