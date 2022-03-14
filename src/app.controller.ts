@@ -9,6 +9,11 @@ export class AppController {
         private readonly appService: AppService,
         ) {}
 
+    @Get('/')
+    async root(): Promise<string> {
+        return ("Are you looking for some good root ?");
+    }
+
     @Get('/:name')
     async hello(@Param('name') name: string): Promise<string> {
         // VX used to trigger a commit to test versions
